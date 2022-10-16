@@ -12,6 +12,10 @@ SELECT * FROM entries
 ORDER BY id 
 LIMIT $1 OFFSET $2;
 
+-- name: GetEntry :one
+SELECT * FROM entries
+WHERE id = $1;
+
 -- name: updateEntries :one
 UPDATE entries
 set amount = $2 

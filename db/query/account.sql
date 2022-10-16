@@ -13,6 +13,10 @@ SELECT * FROM accounts
 ORDER BY id 
 LIMIT $1 OFFSET $2;
 
+-- name: GetAccount :one
+SELECT * FROM accounts
+WHERE id = $1;
+
 -- name: updateAccount :one
 UPDATE accounts
 set balance = $2 

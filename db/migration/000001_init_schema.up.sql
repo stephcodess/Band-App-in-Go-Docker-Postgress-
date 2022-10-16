@@ -17,7 +17,7 @@ CREATE TABLE "transfers" (
   "id" bigserial PRIMARY KEY NOT NULL,
   "from_account_id" bigint NOT NULL,
   "to_account_id" bigint NOT NULL,
-  "account" bigint NOT NULL,
+  "amount" bigint NOT NULL,
   "created_at" timestamptz DEFAULT (now())
 );
 
@@ -33,7 +33,7 @@ CREATE INDEX ON "transfers" ("to_account_id", "from_account_id");
 
 COMMENT ON COLUMN "entries"."amount" IS 'can be positive or negative';
 
-COMMENT ON COLUMN "transfers"."account" IS 'must be positive';
+COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';
 
 ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
 

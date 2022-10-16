@@ -44,9 +44,27 @@ DELETE FROM accounts
 WHERE id = $1
 `
 
-func (q *Queries) DeletrAccount(ctx context.Context, id int32) error {
+func (q *Queries) DeletrAccount(ctx context.Context, id int64) error {
 	_, err := q.db.ExecContext(ctx, deletrAccount, id)
 	return err
+}
+
+const getAccount = `-- name: GetAccount :one
+SELECT id, owner, balance, currency, created_at FROM accounts
+WHERE id = $1
+`
+
+func (q *Queries) GetAccount(ctx context.Context, id int64) (Accounts, error) {
+	row := q.db.QueryRowContext(ctx, getAccount, id)
+	var i Accounts
+	err := row.Scan(
+		&i.ID,
+		&i.Owner,
+		&i.Balance,
+		&i.Currency,
+		&i.CreatedAt,
+	)
+	return i, err
 }
 
 const listAccounts = `-- name: ListAccounts :many
@@ -97,7 +115,7 @@ RETURNING id, owner, balance, currency, created_at
 `
 
 type updateAccountParams struct {
-	ID      int32 `json:"id"`
+	ID      int64 `json:"id"`
 	Balance int64 `json:"balance"`
 }
 
