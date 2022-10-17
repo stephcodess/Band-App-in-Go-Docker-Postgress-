@@ -21,6 +21,8 @@ jobs:
           POSTGRES_USER: stephen
           POSTGRES_PASSWORD: motunrayor
           POSTGRES_DB: simpleBank
+        ports:
+          - 5432:5432 
         
         options: >-
           --health-cmd pg_isready
